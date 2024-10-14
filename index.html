@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Three.js OSM Buildings</title>
+    <style>
+        body { margin: 0; overflow: hidden; }
+        #threejs-container { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; }
+        #map { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1; }
+    </style>
+    <!-- below css may or may not be included -->
+    <!-- <link href="./styles/OSMBuildings.css" rel="stylesheet"> -->
+</head>
+<body>
+    <div id="map"></div>
+    <div id="threejs-container"></div>
+
+    <!-- Load OSM Buildings library from an alternative CDN => referred docs for this cdn -->
+    <script src="https://cdn.osmbuildings.org/4.1.1/OSMBuildings.js"></script>
+
+    <script type="module">
+        import { createScene, render } from './SceneSetup.js';
+        import { loadOSMBuildings } from './OSMLoader.js';
+        import * as THREE from 'three';
+
+        async function init() {
+            const container = document.getElementById('threejs-container');
+            const { scene, camera, renderer, controls } = createScene(container);
+
+            // Light setup
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            scene.add(ambientLight);
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(100, 100, 100);
+            scene.add(directionalLight);
+
+            // Load OSM buildings
+            try {
+                const osmUrl = 'https://raw.githubusercontent.com/datasets/geo-boundaries-world-110m/master/countries.geojson';
+                const buildings = await loadOSMBuildings(osmUrl);
+                scene.add(buildings);
+            } catch (error) {
+                console.error('Error loading OSM buildings:', error);
+            }
+
+            // set up OSM Buildings map
+            const map = new OSMBuildings({
+                container: 'map',
+                position: { latitude: 12.935311732137574, longitude: 77.53595486347554 },
+                zoom: 16,
+                minZoom: 15,
+                maxZoom: 20,
+                tilt: 40,
+                rotation: 300,
+                effects: ['shadows'],
+                attribution: '© Data <a href="https://openstreetmap.org/copyright/">OpenStreetMap</a> © Map <a href="https://mapbox.com/">Mapbox</a> © 3D <a href="https://osmbuildings.org/copyright/">OSM Buildings</a>'
+            });
+
+            map.addMapTiles('https://tile-a.openstreetmap.fr/hot/{z}/{x}/{y}.png');
+            map.addGeoJSONTiles('https://{s}.data.osmbuildings.org/0.2/59fcc2e8/tile/{z}/{x}/{y}.json');
+
+            // Rotate the map
+            let rotation = 0;
+            function rotate() {
+                map.setRotation(rotation);
+                rotation = (rotation + 1) % 360;
+                requestAnimationFrame(rotate);
+            }
+            // Uncomment to start rotation => keeps rotating continuously
+            // rotate();
+
+            // Animation loop for Three.js
+            function animate() {
+                requestAnimationFrame(animate);
+                controls.update();
+                render(renderer, scene, camera);
+            }
+
+            animate();
+        }
+
+        init();
+    </script>
+</body>
+</html>
