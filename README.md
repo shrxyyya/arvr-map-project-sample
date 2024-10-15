@@ -8,7 +8,7 @@ GeoNav is an immersive 2D-to-3D mapping navigation tool that allows users to sea
 
 - Seamless 2D to 3D Transition: Instantly switch from a 2D map to an interactive 3D view by clicking on any location.
 - 3D Interactivity: Explore the 3D environment, interact with buildings, streets, and other geographic entities.
-- Realistic 3D Rendering: **Three.js renders the 3D maps with dynamic lighting and shadows, providing a highly realistic and immersive view.
+- Realistic 3D Rendering: Three.js renders the 3D maps with dynamic lighting and shadows, providing a highly realistic and immersive view.
 - MapTiler Integration: Utilizes **MapTiler to create high-quality, customizable 2D and 3D maps with detailed topographical data.
 - Easy Navigation: Navigate through the 3D environment using intuitive controls for smooth panning, zooming, and rotating.
 
