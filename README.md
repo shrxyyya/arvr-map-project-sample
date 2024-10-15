@@ -1,6 +1,6 @@
 # GeoNav
 
-GeoNav is an immersive 2D-to-3D mapping navigation tool that allows users to seamlessly explore geographic locations in 2D and 3D. By clicking on any latitude and longitude on a 2D map, users are transported to a detailed 3D view of that area, where they can interact with the surroundings, such as buildings, streets, and other geographic features. Whether you're exploring new cities or reviewing architectural structures, **GeoNav provides an immersive experience right from your browser!
+GeoNav is an immersive 2D-to-3D mapping navigation tool that allows users to seamlessly explore geographic locations in 2D and 3D. By clicking on any latitude and longitude on a 2D map, users are transported to a detailed 3D view of that area, where they can interact with the surroundings, such as buildings, streets, and other geographic features. Whether you're exploring new cities or reviewing architectural structures, GeoNav provides an immersive experience right from your browser!
 
 ---
 
